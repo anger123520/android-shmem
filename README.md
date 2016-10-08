@@ -38,3 +38,10 @@ To use it inside Linux chroot installed on Android, do
 The shared memory segments it creates will be automatically destroyed
 when an owner process destroys them or dies,
 however Xserver and it's clients do not depend on that functionality.
+
+To use the shm APIs:
+
+    Proc A call shmget, create the sharememory, shmid is the return value; call shmat, mmap the sharememory to process;
+           call shmdt, unmmap the sharememory; call shmctl(shmid1,IPC_RMID,0), destroy the sharememory
+           
+    Proc B get the shmid from Proc A, then call shmat & shmdt to use the sharememory
